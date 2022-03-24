@@ -45,7 +45,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         outputTextView.text = flippedWords
     }
     
-    func configureHeaderLabel() {
+    private func configureHeaderLabel() {
         view.addSubview(headerLabel)
         
         NSLayoutConstraint.activate([
@@ -56,7 +56,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         ])
     }
     
-    func configureInputTextView() {
+    private func configureInputTextView() {
         view.addSubview(inputTextView)
         
         inputTextView.delegate = self
@@ -69,7 +69,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         ])
     }
     
-    func configureDoneTypingButton() {
+    private func configureDoneTypingButton() {
         view.addSubview(doneTypingButton)
         
         NSLayoutConstraint.activate([
@@ -79,9 +79,8 @@ class ViewController: UIViewController, UITextViewDelegate {
             doneTypingButton.heightAnchor.constraint(equalToConstant: buttonHeight)
         ])
     }
-    
-    
-    func configureOutputTextView() {
+
+    private func configureOutputTextView() {
         view.addSubview(outputTextView)
         outputTextView.isEditable = false
         
@@ -93,7 +92,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         ])
     }
     
-    func configureGenerateButton() {
+    private func configureGenerateButton() {
         view.addSubview(generateButton)
         
         NSLayoutConstraint.activate([
