@@ -12,9 +12,9 @@ class ViewController: UIViewController, UITextViewDelegate {
     private let buttonHeight: CGFloat = 40
     private let labelHeight: CGFloat = 30
     private let headerLabel = TFHeaderLabel(text: "Text Flipper", alignment: .center)
-    private let inputTextView = TFTextView()
+    private let inputTextView = TFTextView(textColor: .white)
     private let doneTypingButton = TFButton(title: "Done Typing")
-    private let outputTextView = TFTextView()
+    private let outputTextView = TFTextView(textColor: .systemGray)
     private let generateButton = TFButton(title: "Generate")
     
     

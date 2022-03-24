@@ -9,20 +9,21 @@ import UIKit
 
 class TFTextView: UITextView {
     
-    init() {
+    init(textColor: UIColor) {
         super.init(frame: .zero, textContainer: nil)
-        configure()
+        configure(textColor: textColor)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
+    private func configure(textColor: UIColor) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.font = UIFont.systemFont(ofSize: 17.0)
         self.layer.borderColor = UIColor.systemBlue.cgColor
         self.layer.borderWidth = 1
         self.layer.cornerRadius = 5.0
+        self.textColor = textColor
     }
 }
