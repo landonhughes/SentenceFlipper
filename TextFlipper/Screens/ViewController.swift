@@ -7,13 +7,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextViewDelegate {
 
-    private let inputTextView = TFTextView()
+    private let buttonHeight: CGFloat = 40
+    private let labelHeight: CGFloat = 30
     private let headerLabel = TFHeaderLabel(text: "Text Flipper", alignment: .center)
-    private let outputLabel = TFHeaderLabel(text: "Output", alignment: .center)
+    private let inputTextView = TFTextView()
+    private let doneTypingButton = TFButton(title: "Done Typing")
     private let outputTextView = TFTextView()
-    private let generateButton = TFButton()
+    private let generateButton = TFButton(title: "Generate")
     
     
     private let inset: CGFloat = 15
@@ -22,21 +24,27 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         configureHeaderLabel()
         configureInputTextView()
-        configureOutputLabel()
+        configureDoneTypingButton()
         configureGenerateButton()
         configureOutputTextView()
         
-        
-        let textFlipper = TextFlipper()
-        let multilineSentence =
-        """
-        This is an actual paragraph. I'm trying to flip.
-        I love android phones hahaha
-
-        """
-        textFlipper.invertText(sentence: multilineSentence)
+        doneTypingButton.addTarget(self, action: #selector(endEditing), for: .touchUpInside)
+        doneTypingButton.addTarget(self, action: #selector(startEditing), for: .touchUpInside)
+        generateButton.addTarget(self, action: #selector(generateUpsideDownText), for: .touchUpInside)
     }
 
+    @objc func endEditing() {
+        inputTextView.isEditable = false
+    }
+    @objc func startEditing() {
+        inputTextView.isEditable = true
+    }
+    
+    @objc func generateUpsideDownText() {
+        let flippedWords = TextFlipper.invertText(sentence: inputTextView.text)
+        outputTextView.text = flippedWords
+    }
+    
     func configureHeaderLabel() {
         view.addSubview(headerLabel)
         
@@ -44,7 +52,7 @@ class ViewController: UIViewController {
             headerLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             headerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             headerLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            headerLabel.heightAnchor.constraint(equalToConstant: 30)
+            headerLabel.heightAnchor.constraint(equalToConstant: labelHeight)
         ])
     }
     
@@ -57,21 +65,21 @@ class ViewController: UIViewController {
             inputTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: inset),
             inputTextView.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
             inputTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -inset),
-            inputTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
+            inputTextView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -buttonHeight)
         ])
     }
     
-    func configureOutputLabel() {
-        view.addSubview(outputLabel)
+    func configureDoneTypingButton() {
+        view.addSubview(doneTypingButton)
         
         NSLayoutConstraint.activate([
-            outputLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            outputLabel.topAnchor.constraint(equalTo: inputTextView.bottomAnchor),
-            outputLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            outputLabel.heightAnchor.constraint(equalToConstant: 30)
+            doneTypingButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: inset),
+            doneTypingButton.topAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: inset),
+            doneTypingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -inset),
+            doneTypingButton.heightAnchor.constraint(equalToConstant: buttonHeight)
         ])
-        
     }
+    
     
     func configureOutputTextView() {
         view.addSubview(outputTextView)
@@ -79,7 +87,7 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             outputTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: inset),
-            outputTextView.topAnchor.constraint(equalTo: outputLabel.bottomAnchor),
+            outputTextView.topAnchor.constraint(equalTo: doneTypingButton.bottomAnchor, constant: inset),
             outputTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -inset),
             outputTextView.bottomAnchor.constraint(equalTo: generateButton.topAnchor, constant: -inset)
         ])
@@ -90,14 +98,10 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             generateButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: inset),
-            generateButton.heightAnchor.constraint(equalToConstant: 40),
+            generateButton.heightAnchor.constraint(equalToConstant: buttonHeight),
             generateButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -inset),
             generateButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -inset)
         ])
     }
-    
-}
 
-extension ViewController: UITextViewDelegate {
-    
 }

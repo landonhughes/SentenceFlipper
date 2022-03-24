@@ -8,8 +8,10 @@
 import Foundation
 
 struct TextFlipper {
+    //Credit goes to @jasny for the ASCII table
+    //https://gist.github.com/jasny/9807617
     
-    let table: [String: String] =
+    private static let table: [String: String] =
     [
         "a": "\u{0250}",
         "b": "q",
@@ -53,9 +55,9 @@ struct TextFlipper {
         " ": " "
     ]
     
-    func invertText(sentence: String?) {
-        guard let sentence = sentence?.lowercased() else { return }
-        if sentence.isEmpty { return }
+    static func invertText(sentence: String?) -> String? {
+        guard let sentence = sentence?.lowercased() else { return nil }
+        if sentence.isEmpty { return nil }
         
         var invertedCharacters = [String]()
         
@@ -70,8 +72,7 @@ struct TextFlipper {
         
         let reversedInvertedSentence = invertedCharacters.reversed()
         let upsideDownSentence = reversedInvertedSentence.joined(separator: "")
-        print("Upside down sentence: \(upsideDownSentence)")
-        
+        return upsideDownSentence
     }
     
     
