@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     private func addDoneButtonToKeyboard() {
         //credit to https://stevenpcurtis.medium.com/enabling-the-done-button-to-a-uitextview-967499f392ed
         let toolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
-        let flexSpace = UIBarButtonItem(barButtonSystemItem:    .flexibleSpace, target: nil, action: nil)
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let doneBtn: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneTapped))
         toolbar.setItems([flexSpace, doneBtn], animated: false)
         toolbar.sizeToFit()
