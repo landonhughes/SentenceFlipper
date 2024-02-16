@@ -19,11 +19,13 @@ class TFTextView: UITextView {
     }
     
     private func configure(textColor: UIColor) {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.font = UIFont.systemFont(ofSize: 17.0)
-        self.layer.borderColor = UIColor.systemBlue.cgColor
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = 5.0
+        translatesAutoresizingMaskIntoConstraints = false
+        font = UIFont.systemFont(ofSize: 17.0)
+        layer.borderColor = UIColor.systemBlue.cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 5.0
         self.textColor = textColor
+        textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+
     }
 }

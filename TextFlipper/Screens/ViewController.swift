@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     
     private let headerLabel = TFHeaderLabel(text: "Text Flipper", alignment: .center)
     private let inputTextView = TFTextView(textColor: .systemBlue)
-    private let doneTypingButton = TFButton(title: "Done Typing")
     private let outputTextView: TFTextView = {
         let textView = TFTextView(textColor: .systemGray)
         textView.isEditable = false
@@ -26,12 +25,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubviews(headerLabel, inputTextView, doneTypingButton, outputTextView, generateButton)
+        view.addSubviews(headerLabel, inputTextView, outputTextView, generateButton)
+        
         layoutUI()
         addDoneButtonToKeyboard()
 
-        doneTypingButton.addTarget(self, action: #selector(endEditing), for: .touchUpInside)
-        doneTypingButton.addTarget(self, action: #selector(startEditing), for: .touchUpInside)
         generateButton.addTarget(self, action: #selector(displayUpsideDownText), for: .touchUpInside)
     }
     
@@ -45,12 +43,6 @@ class ViewController: UIViewController {
         inputTextView.inputAccessoryView = toolbar
     }
 
-    @objc func endEditing() {
-        inputTextView.isEditable = false
-    }
-    @objc func startEditing() {
-        inputTextView.isEditable = true
-    }
     
     @objc func doneTapped() {
         view.endEditing(true)
@@ -79,14 +71,6 @@ class ViewController: UIViewController {
             inputTextView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -buttonHeight)
         ])
         
-        //done typing button
-        NSLayoutConstraint.activate([
-            doneTypingButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: inset),
-            doneTypingButton.topAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: inset),
-            doneTypingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -inset),
-            doneTypingButton.heightAnchor.constraint(equalToConstant: buttonHeight)
-        ])
-        
         //generate button
         NSLayoutConstraint.activate([
             generateButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: inset),
@@ -98,7 +82,7 @@ class ViewController: UIViewController {
         //output text view
         NSLayoutConstraint.activate([
             outputTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: inset),
-            outputTextView.topAnchor.constraint(equalTo: doneTypingButton.bottomAnchor, constant: inset),
+            outputTextView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: inset),
             outputTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -inset),
             outputTextView.bottomAnchor.constraint(equalTo: generateButton.topAnchor, constant: -inset)
         ])
